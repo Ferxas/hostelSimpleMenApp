@@ -26,7 +26,7 @@ const FoodSelectionScreen = () => {
       duration: 1000,
       useNativeDriver: true,
     }).start();
-  }, [fadeAnim]); 
+  }, [fadeAnim]);
 
   const foodItems = [
     {
@@ -39,16 +39,38 @@ const FoodSelectionScreen = () => {
       ],
       image: require("./assets/menuImages/pizza.jpg"),
     },
+    {
+      id: 2,
+      name: "Burger",
+      price:  5 ,
+      additions:[
+        {id :3,name:"Cheese",price:4},],image:require('./assets/menuImages/burger.jpg')
+        },
     // ... other food items
   ];
 
-
   const handleAddItem = (item, addition) => {
-    const updatedItem = { ...item, price: item.price + addition.price };
-    const updatedItems = [...selectedItems, updatedItem];
-    setSelectedItems(updatedItems);
-    setTotalPrice(totalPrice + updatedItem.price);
+    if (item && addition) {
+      const updatedItem = { ...item, price: item.price + addition.price };
+      const updatedItems = [...selectedItems, updatedItem];
+      setSelectedItems(updatedItems);
+      setTotalPrice(totalPrice + updatedItem.price);
+    } else if (!item && addition) {
+      // Handle the case where `item` is undefined but `addition` is defined.
+      // For example, you can show an error message or take appropriate action.
+      console.error("Item is undefined, but addition is selected.");
+    } else if (item && !addition) {
+      // Handle the case where `item` is defined but `addition` is undefined.
+      // For example, you can show a message indicating that no addition was selected.
+      console.warn("No addition selected for the item.");
+    } else {
+      // Handle the case where both `item` and `addition` are undefined.
+      // This might indicate an unexpected situation, so you can log an error or take appropriate action.
+      console.error("Both item and addition are undefined.");
+    }
   };
+  
+  
 
   const handleResetTotalPrice = () => {
     setTotalPrice(0);
@@ -96,51 +118,35 @@ const FoodSelectionScreen = () => {
                 data={item.additions}
                 keyExtractor={(addition) => addition.id.toString()}
                 renderItem={({ addition }) => (
-                  <Button 
-                    title={`Añadir ${addition.name} - $${addition.price}`}
+                  <Button
+                    title={`Añadir ${(addition && addition.name) || ""} - $${
+                      (addition && addition.price) || 0
+                    }`}
                     onPress={() => handleAddItem(item, addition)}
                   />
                 )}
               />
-              <Animated.View
-              style={{ opacity: fadeAnim }}
-              >
-              <Button 
-                icon={
-                  <Icon
-                    name="add"
-                    size={15}
-                    color="white"
-                  />
-                }
-                title="Añadir"
-                onPress={() => handleAddItem(item)}
-              />
+              <Animated.View style={{ opacity: fadeAnim }}>
+                <Button
+                  icon={<Icon name="add" size={15} color="white" />}
+                  title="Añadir"
+                  onPress={() => handleAddItem(item)}
+                />
               </Animated.View>
             </View>
           )}
         />
         <Text style={styles.totalPrice}>Precio total: ${totalPrice}</Text>
-        <Button 
-          icon={
-            <Icon
-              name="refresh"
-              size={15}
-              color="white"
-            />
-          }
+        <Button
+          icon={<Icon name="refresh" size={15} color="white" />}
           title="  Reiniciar Precio Total"
-          onPress={handleResetTotalPrice} style={{margin: 10}}
+          onPress={handleResetTotalPrice}
+          style={{ margin: 10 }}
         />
-        <Button 
-          icon={
-            <Icon
-              name="send"
-              size={15}
-              color="white"
-            />
-          }
-          title="Enviar pedido vía WhatsApp" style={{margin: '20px'}}
+        <Button
+          icon={<Icon name="send" size={15} color="white" />}
+          title="Enviar pedido vía WhatsApp"
+          style={{ margin: "20px" }}
           onPress={handleSendOrder}
         />
       </ImageBackground>
@@ -159,7 +165,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     marginBottom: 16,
-    fontFamily: 'System',
+    fontFamily: "System",
   },
   foodItem: {
     flexDirection: "row",
