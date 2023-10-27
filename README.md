@@ -1,6 +1,7 @@
 # hostelSimpleMenApp
 
 **git clone command**
+
 `git clone https://github.com/Ferxas/hostelSimpleMenApp`
 
 **INSTALLATION**
