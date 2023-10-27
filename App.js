@@ -179,7 +179,7 @@ export default function App() {
     const drinksText = selectedDrinks.map((drink) => ` ${drink.name} +$${drink.price}`).join('%0A');
 
     const message = `Mi pedido:%0A${orderText}%0ATotal de Comida: $${totalPrice}%0ABebidas:${drinksText}%0ATotal de Bebidas: $${drinksTotalPrice}%0ATotal por todo: $${totalOrderPrice}`;
-    const phoneNumber = '3115776456';
+    const phoneNumber = ''; // number here
 
     const whatsappURL = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
 
