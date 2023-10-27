@@ -1,6 +1,6 @@
 # hostelSimpleMenApp
 
-> **git clone command**
+> **Git clone command**
 
 `git clone https://github.com/Ferxas/hostelSimpleMenApp`
 
@@ -12,4 +12,4 @@ Open terminal in root folder:
 
 
 **USAGE (try to use the new CLI)**
-1. expo start
+1. `expo start`
